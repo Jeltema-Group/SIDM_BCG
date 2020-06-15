@@ -16,6 +16,11 @@ cd scripts/
 ```
 
 ### First put the data into a standard format. 
+
+```
+python cluster_info_generator.py DES_data_mergers_removed.fits ../data/xray_data/
+```
+
 First argument (in this case ``DES_data_mergers_removed.fits``) is the data from 
 DES. The columns we use from this table are:
 1. ``Name`` (in 'catalogue_x' format)
@@ -28,22 +33,17 @@ DES. The columns we use from this table are:
 Second argument (in this case ``../data/x-ray_data/``) is the directory that 
 contains all of the x-ray data from Chandra.
 
-In the command line:
-```
-python cluster_info_generator.py DES_data_mergers_removed.fits ../data/xray_data/
-```
 This will output a file called ``prepared_data.fits``. Do not move or alter this table. 
 
 ### We are now ready to run the simulations
+```
+get_centroids.py 100 first_simulation
+```
 First argument (``100``) is the number of simulations you want to run per cluster.
 
 Second argument (``first_simulation``) is the name of your simulation. This will 
 create a directory in ~/simulations/ that stores the results of this step.
 
-In the command line:
-```
-get_centroids.py 100 first_simulation
-```
 This step will take a while, but there should be annotations on what simulation and 
 cluster is being worked on.
 
