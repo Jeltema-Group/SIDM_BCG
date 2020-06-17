@@ -37,7 +37,7 @@ This will output a file called ``prepared_data.fits``. Do not move or alter this
 
 ### We are now ready to run the simulations
 ```
-get_centroids.py 100 first_simulation
+python get_centroids.py 100 first_simulation
 ```
 First argument (``100``) is the number of simulations you want to run per cluster.
 
@@ -47,3 +47,21 @@ create a directory in ~/simulations/ that stores the results of this step.
 This step will take a while, but there should be annotations on what simulation and 
 cluster is being worked on.
 
+## Analyzing the simulations
+
+### Compile the results of the simulations into one fits file
+```
+python final_results.py first_simulation
+```
+This will create an image in the ``~/results/results_images/`` directory called ``result_first_simulation.png``. 
+
+### Make the offset histogram and calculate the predicted cross-section
+```
+python histogram_fit.py first_simulation
+```
+This will create another image in the ``~/results/results_images/`` directory called ``histogram_fit_first_simulation.png``.
+
+### Check individual clusters
+```
+python sim_illustrations.py 199 first_simulation
+```
