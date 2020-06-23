@@ -37,12 +37,14 @@ This will output a file called ``prepared_data.fits``. Do not move or alter this
 
 ### We are now ready to run the simulations
 ```
-python get_centroids.py 100 first_simulation
+python get_centroids.py 100 first_simulation 
 ```
 First argument (``100``) is the number of simulations you want to run per cluster.
 
 Second argument (``first_simulation``) is the name of your simulation. This will 
 create a directory in ~/simulations/ that stores the results of this step.
+
+OPTIONAL third argument is how close you want the x-ray peak to be to the center of the R500 cutout. The default is 2 pixels.
 
 This step will take a while, but there should be annotations on what simulation and 
 cluster is being worked on.

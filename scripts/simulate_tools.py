@@ -121,7 +121,9 @@ def circular_cut(arr, center, radius):
     for x in range(2*radius):
         for y in range(2*radius):
             if (x-radius)**2 + (y-radius)**2 < radius**2:
-                cut[x][y] = arr[y+y0][x+x0]
+                if arr[y+y0][x+x0] is np.nan:
+                    print(arr[y+y0][x+x0])
+                cut[x][y] = 0 if arr[y+y0][x+x0]==np.nan else arr[y+y0][x+x0]
     return np.array(cut), x0, y0
 
 from astropy.coordinates import SkyCoord

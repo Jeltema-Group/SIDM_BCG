@@ -42,7 +42,8 @@ for cluster in new_data['Name']:
     i += 1
 new_data['Data_Path'] = paths
 
-
+if os.path.exists("../prepared_data.fits"):
+    os.remove("../prepared_data.fits")
 new_data.write("../prepared_data.fits")
 
 

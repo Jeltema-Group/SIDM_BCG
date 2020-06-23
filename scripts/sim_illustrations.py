@@ -79,7 +79,8 @@ for sim in simulations_dir:
     #plt.plot(x, y, label="0.15 * r500")
   
     from mpl_toolkits.axes_grid1 import make_axes_locatable
-    im = ax.imshow(img_data, norm=LogNorm(), cmap=plt.cm.get_cmap('binary'), vmax=15)
+    print(img_data)
+    im = ax.imshow(img_data, norm=LogNorm(), cmap=plt.cm.get_cmap('binary'), vmax=10)
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.5)
 
