@@ -36,7 +36,7 @@ x = [(bins[i]+bins[i+1])/2 for i in range(len(bins)-1)]
 from scipy.stats import lognorm
 def f(x, s, u, a):
     A = [a*(s * xi * np.sqrt(2*np.pi))**(-1) for xi in x]
-    f = [np.exp(-(np.log((xi-u)/(np.sqrt(2)*s)))**2) for xi in x]
+    f = [np.exp(-(np.log(xi)**2-np.log(u)**2)/(np.sqrt(2)*s)**2) for xi in x]
     return [A[i]*f[i] for i in range(len(A))]
     
 sigma = []
