@@ -18,8 +18,10 @@ if len(sys.argv) != 2:
 
 results_path = "../results/results_"+sys.argv[1]+".fits"
 
+print("Reading results_"+sys.argv[1]+".fits ...")
 t = Table.read(results_path)
 
+print("Cutting out offsets greater than 40 kpc...")
 mask = (t['BCG_offset_kpc']<40)
 offsets = t['BCG_offset_kpc'][mask]
 p_dist = offsets/np.sum(offsets)
@@ -50,6 +52,8 @@ popt, pcov = curve_fit(f, x, n/np.sum(n), sigma=sigma)
 
 x = [i/100 for i in range(1, 10000)]
 print("s:", *popt)
+
+print("Plotting the histogram to histogram_fit_" + sys.argv[1] + '.png')
 plt.plot(x, f(x, *popt), color="tomato", linewidth=10, 
             label="$\mu$="+str(popt[0])[:5]+" $\pm$ "+ str(popt[1])[:4]+ " kpc")
 

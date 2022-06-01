@@ -18,14 +18,14 @@ if len(sys.argv) != 2:
 results_path = "../simulations/" + sys.argv[1] + "/"
 
 #determine centroid and associated error
-cluster_info = Table.read("../prepared_data.fits")
-cluster_info.remove_row(12)
+cluster_info = Table.read("../simulations/"+sys.argv[1]+"_prepared_data.fits")
 
 name = np.zeros(len(os.listdir(results_path)))
 center_to_BCG = np.zeros(len(os.listdir(results_path)))
 up_errors = np.zeros(len(os.listdir(results_path))) ; i = 0
 lo_errors = np.zeros(len(os.listdir(results_path)))
 
+print("Calculating median separtation and errors ...")
 for cluster in os.listdir(results_path):
     name[i] = int(cluster[20:-5]) 
     path = results_path+cluster
@@ -42,6 +42,7 @@ for cluster in os.listdir(results_path):
     i+=1
 
 #make a final table
+print("Writing results_" + sys.argv[1] + ".fits ...")
 n = Column(name, name="catalog_number", dtype=np.int32)
 o = Column(center_to_BCG, name="BCG_offset_kpc")
 u = Column(up_errors, name="Upper_Error_kpc")
@@ -54,7 +55,7 @@ if os.path.exists(result_table_path):
 results.write(result_table_path)
 
 #plot results
-
+print("Plotting the results to result_" + sys.argv[1] + '.png')
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.colors import LogNorm

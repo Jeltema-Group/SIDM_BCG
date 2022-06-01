@@ -37,9 +37,12 @@ cluster_info = Table.read(info_path)
 if not os.path.exists("../simulations/"+ sim_name + "/"):
     os.mkdir("../simulations/" + sim_name)
 
+if not os.path.exists("../simulations/"+ sim_name + "_prepared_data.fits"):
+    cluster_info.write("../simulations/"+ sim_name + "_prepared_data.fits")
+
 for i in range(len(cluster_info)):
     catnum = cluster_info['Name'][i][10:]
-    print("\n\ncluster catalog_"+catnum)
+    print("cluster catalog_"+catnum)
     if os.path.exists("../simulations/"+ sim_name + "/simulated_centroids_" + catnum + ".fits"):
         continue
     elif cluster_info['Name'][i] == "catalogue_169":
@@ -85,7 +88,7 @@ for i in range(len(cluster_info)):
     sim_coords["separations_kpc"] = sim.separations(ra, dec, x, Z)
 
     sim_coords.write("../simulations/" + sim_name + "/simulated_centroids_" + catnum + ".fits")
-
+    print("\n")
 
 
 

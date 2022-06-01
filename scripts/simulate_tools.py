@@ -86,45 +86,46 @@ LIBRARY TOOLS DOCUMENTATION:
 
 '''Noise Generation Functions'''
 
-def add_noise(data): 
+def add_noise(data):  
     noisey_array = copy.deepcopy(data)
-    for row in noisey_array:
-        for pixel in range(len(row)): 
-            noise = np.random.poisson(int(row[pixel]))
-            row[pixel] = row[pixel] + noise
+    noisey_array += np.random.poisson(np.int_(noisey_array))
     return noisey_array
-
-
 
 
 '''Centroid Measurement Function'''
 
 def centroid(data):
-    wx = 0 ; wy = 0 ; w = 0
-    for i in range(len(data)):
-        for j in range(len(data[0])):
-            wx += (i+1)*data[i][j]
-            wy += (j+1)*data[i][j]
-            w += data[i][j]
+    w = np.sum(data)
+
+    x_pos = np.reshape(np.int_(np.linspace(1, len(data), len(data))), (len(data),1))
+    y_pos = np.int_(np.linspace(1, len(data[0]), len(data[0])))
+    
+    wx = np.sum(x_pos*data)
+    wy = np.sum(y_pos*data)
     
     if w == 0:
         return 0., 0.
     return wx/w, wy/w
 
 
-
 '''Data Preparation Functions'''
 
 def circular_cut(arr, center, radius):
     x0=center[0]-radius ; y0=center[1]-radius
-    cut = np.zeros((int(2*radius), int(2*radius)))
-    for x in range(2*radius):
-        for y in range(2*radius):
-            if (x-radius)**2 + (y-radius)**2 < radius**2:
-                if arr[y+y0][x+x0] is np.nan:
-                    print(arr[y+y0][x+x0])
-                cut[x][y] = 0 if arr[y+y0][x+x0]==np.nan else arr[y+y0][x+x0]
-    return np.array(cut), x0, y0
+    #The square of the image we're looking at.
+    cut = np.transpose(arr[y0:y0+2*radius])[x0:x0+2*radius]
+    
+    #A circle nestled neatly in the square 
+    x_pos = np.reshape(np.int_(np.linspace(0, len(cut)-1, len(cut))), (len(cut),1))
+    y_pos = np.int_(np.linspace(0, len(cut[0])-1, len(cut[0])))
+    circ = (x_pos-radius)**2 + (y_pos-radius)**2
+    circ_true=circ < radius**2
+
+    #Where the NaNs are
+    nan_true = cut != np.nan
+    
+    #Zeroing out the NaNs and stuff outside the circle in the cut.
+    return nan_true*circ_true*cut, x0, y0
 
 from astropy.coordinates import SkyCoord
 
@@ -163,8 +164,6 @@ def degrees_to_pixels(theta): #conversion is 0.492 arc seconds per pixel
 
 def pixels_to_degrees(pixels):
     return (((0.492)*pixels)*u.arcsec).to(u.degree)
-
-
 
 
 def pixel_distance(coords1, coords2):

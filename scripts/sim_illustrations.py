@@ -26,8 +26,7 @@ if len(sys.argv) != 3:
 goal_catnum = sys.argv[1]
 print("illustrating catalogue_"+goal_catnum)
 
-cluster_info = Table.read("../prepared_data.fits")
-cluster_info.remove_row(12)
+cluster_info = Table.read("../simulations/"+sys.argv[2]+"_prepared_data.fits")
 
 print(cluster_info.colnames)
 
