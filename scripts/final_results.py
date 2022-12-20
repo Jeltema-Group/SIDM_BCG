@@ -26,6 +26,7 @@ up_errors = np.zeros(len(os.listdir(results_path))) ; i = 0
 lo_errors = np.zeros(len(os.listdir(results_path)))
 
 print("Calculating median separtation and errors ...")
+cluster_info.sort(['Name'])
 for cluster in os.listdir(results_path):
     name[i] = int(cluster[20:-5]) 
     path = results_path+cluster
